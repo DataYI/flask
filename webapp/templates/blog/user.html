@@ -1,0 +1,38 @@
+{% extends "blog/base.html" %}
+{% block title %}{{ user.username }}的文章{% endblock %}
+{% block body %}
+  <div class="row">
+    <h1 class="text-center">&nbsp;{{ user.username }}写的文章</h1>
+    <div class="col-lg-9">
+      {% for post in posts %}
+        <div class="row">
+          <div class="col-lg-12"><h1>{{ post.title }}</h1></div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            {{ post.text | truncate(500) | safe }}
+            <a href="{{ url_for('.post', post_id=post.id) }}">阅读更多</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="col-lg-3">
+      <div class="row">
+        <h5>最新的文章</h5>
+        <ul>
+          {% for post in recent %}
+            <li><a href="{{ url_for('.post', post_id=post.id) }}">{{ post.title }}</a></li>
+          {% endfor %}
+        </ul>
+        <div class="row">
+        <h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;热门标签</h5>
+        <ul>
+          {% for tag in top_tags %}
+            <li><a href="{{ url_for('.tag', tag_name=tag[0].title) }}">{{ tag[0].title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
